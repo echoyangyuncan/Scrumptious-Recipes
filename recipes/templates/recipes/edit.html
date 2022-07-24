@@ -9,6 +9,30 @@
 </head>
 
 <body>
+  <header>
+    <nav>
+      <ul>
+        <li>
+          <a href="{% url 'home' %}">Scrumptious</a>
+        </li>
+        <li>
+          <a href="{% url 'admin:index' %}">Admin</a>
+        </li>
+        <li>
+          <a href="{% url 'recipe_new' %}">Write a recipe</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main class="recipe-form">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="control">
+        <button class="button">Update</button>
+      </div>
+    </form>
+  </main>
 
 </body>
 
