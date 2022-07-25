@@ -38,6 +38,7 @@
     {% endif %}
     <h1>{{ recipe.name }}</h1>
     <p>
+      <h2>by: {{ recipe.author | default_if_none:"Unknown" }}</h2>
       Created on {{ recipe.created }} |
       Updated on {{ recipe.updated }}
     </p>
