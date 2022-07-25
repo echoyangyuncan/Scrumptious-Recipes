@@ -4,6 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from recipes.forms import RatingForm
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 try:
     from recipes.forms import RecipeForm
@@ -23,12 +24,12 @@ def log_rating(request, recipe_id):
     return redirect("recipe_detail", pk=recipe_id)
 
 
-class RecipelistView(ListView):
+class RecipelistView(LoginRequiredMixin, ListView):
     model = Recipe
     template_name = "recipes/list.html"
 
 
-class RecipeDetailView(DetailView):
+class RecipeDetailView(LoginRequiredMixin, DetailView):
     model = Recipe
     template_name = "recipes/detail.html"
 
@@ -38,21 +39,21 @@ class RecipeDetailView(DetailView):
         return context
 
 
-class RecipeCreateView(CreateView):
+class RecipeCreateView(LoginRequiredMixin, CreateView):
     model = Recipe
     template_name = "recipes/new.html"
     fields = ["name", "author", "description", "image"]
     success_url = reverse_lazy("recipes_list")
 
 
-class RecipeUpdateView(UpdateView):
+class RecipeUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipe
     template_name = "recipes/edit.html"
     fields = ["name", "author", "description", "image"]
     success_url = reverse_lazy("recipes_list")  # This, too!
 
 
-class RecipeDeleteView(DeleteView):
+class RecipeDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipe
     template_name = "recipes/delete.html"
     success_url = reverse_lazy("recipes_list")
